@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Placeholder screenshot: real estate listings app. Replace with a real capture. -->
+  <defs>
+    <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7d8f5"/><stop offset="1" stop-color="#eef3fb"/></linearGradient>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7d9c4"/><stop offset="1" stop-color="#fbf0e7"/></linearGradient>
+    <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe8dc"/><stop offset="1" stop-color="#eff8f3"/></linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f2a44"/><stop offset="1" stop-color="#3b3170"/></linearGradient>
+    <symbol id="house" viewBox="0 0 440 220">
+      <rect x="0" y="170" width="440" height="50" fill="#9fbf8f" opacity=".55"/>
+      <path d="M90 170V95l95-60 95 60v75z" fill="#ffffff"/>
+      <path d="M75 100 185 28l110 72" fill="none" stroke="#5a4a78" stroke-width="12" stroke-linejoin="round"/>
+      <rect x="160" y="115" width="50" height="55" rx="4" fill="#5a4a78"/>
+      <rect x="110" y="110" width="34" height="28" rx="3" fill="#a9c4ea"/>
+      <rect x="228" y="110" width="34" height="28" rx="3" fill="#a9c4ea"/>
+      <path d="M280 170v-55h90v55z" fill="#f1ece4"/>
+      <rect x="298" y="128" width="54" height="24" rx="3" fill="#a9c4ea"/>
+      <circle cx="400" cy="140" r="26" fill="#7fae74"/><rect x="396" y="150" width="8" height="22" fill="#6b5a4a"/>
+    </symbol>
+  </defs>
+  <rect width="1600" height="1000" fill="#f6f7fb"/>
+  <!-- top nav -->
+  <rect width="1600" height="76" fill="#ffffff"/>
+  <rect y="76" width="1600" height="1" fill="#e6e7ee"/>
+  <rect x="48" y="22" width="32" height="32" rx="9" fill="#6d4ae0"/>
+  <path d="M56 44V36l8-6 8 6v8z" fill="#fff"/>
+  <text x="94" y="46" font-size="20" font-weight="700" fill="#1b1d2b">Real Estate</text>
+  <g font-size="15" fill="#5f6378"><text x="560" y="44">Buy</text><text x="630" y="44">Rent</text><text x="706" y="44">Sell</text><text x="776" y="44">Agents</text></g>
+  <rect x="1360" y="20" width="100" height="36" rx="18" fill="none" stroke="#d9dbe6"/>
+  <text x="1388" y="43" font-size="14" fill="#1b1d2b">Sign in</text>
+  <rect x="1472" y="20" width="80" height="36" rx="18" fill="#6d4ae0"/><text x="1493" y="43" font-size="14" fill="#fff">List</text>
+  <!-- hero -->
+  <rect x="48" y="104" width="1504" height="210" rx="20" fill="url(#hero)"/>
+  <text x="96" y="176" font-size="38" font-weight="700" fill="#ffffff">Find a place you'll love</text>
+  <text x="96" y="212" font-size="17" fill="#c9c6e6">Browse listings by location, price and property type</text>
+  <rect x="96" y="236" width="900" height="52" rx="14" fill="#ffffff"/>
+  <circle cx="126" cy="262" r="8" fill="none" stroke="#8a8ea3" stroke-width="2.5"/><path d="m132 268 6 6" stroke="#8a8ea3" stroke-width="2.5"/>
+  <text x="150" y="268" font-size="16" fill="#9a9db0">Search by city, neighbourhood or address</text>
+  <rect x="852" y="243" width="136" height="38" rx="10" fill="#6d4ae0"/><text x="892" y="268" font-size="15" font-weight="600" fill="#fff">Search</text>
+  <!-- filters -->
+  <g font-size="14" fill="#3b3f55">
+    <rect x="48" y="340" width="96" height="38" rx="19" fill="#1b1d2b"/><text x="74" y="364" fill="#fff">For sale</text>
+    <rect x="156" y="340" width="96" height="38" rx="19" fill="#fff" stroke="#dfe1ea"/><text x="184" y="364">For rent</text>
+    <rect x="264" y="340" width="108" height="38" rx="19" fill="#fff" stroke="#dfe1ea"/><text x="290" y="364">Price ▾</text>
+    <rect x="384" y="340" width="118" height="38" rx="19" fill="#fff" stroke="#dfe1ea"/><text x="408" y="364">Bedrooms ▾</text>
+    <rect x="514" y="340" width="138" height="38" rx="19" fill="#fff" stroke="#dfe1ea"/><text x="538" y="364">Property type ▾</text>
+  </g>
+  <text x="1552" y="364" font-size="14" fill="#6b6f85" text-anchor="end">Sort: Newest ▾</text>
+  <!-- listing cards -->
+  <g id="cards">
+    <g transform="translate(48 404)">
+      <rect width="486" height="270" rx="16" fill="#fff" stroke="#e6e7ee"/>
+      <rect x="10" y="10" width="466" height="160" rx="10" fill="url(#sky1)"/><use href="#house" x="23" y="10" width="440" height="160"/>
+      <rect x="22" y="22" width="72" height="24" rx="12" fill="#6d4ae0"/><text x="36" y="39" font-size="12" font-weight="600" fill="#fff">For sale</text>
+      <rect x="22" y="190" width="150" height="16" rx="5" fill="#1b1d2b"/><rect x="22" y="216" width="260" height="11" rx="5" fill="#c9ccd8"/>
+      <g fill="#e9e5fb"><rect x="22" y="240" width="64" height="18" rx="9"/><rect x="94" y="240" width="64" height="18" rx="9"/><rect x="166" y="240" width="76" height="18" rx="9"/></g>
+    </g>
+    <g transform="translate(557 404)">
+      <rect width="486" height="270" rx="16" fill="#fff" stroke="#e6e7ee"/>
+      <rect x="10" y="10" width="466" height="160" rx="10" fill="url(#sky2)"/><use href="#house" x="23" y="10" width="440" height="160"/>
+      <rect x="22" y="22" width="72" height="24" rx="12" fill="#0f9d6e"/><text x="37" y="39" font-size="12" font-weight="600" fill="#fff">For rent</text>
+      <rect x="22" y="190" width="130" height="16" rx="5" fill="#1b1d2b"/><rect x="22" y="216" width="230" height="11" rx="5" fill="#c9ccd8"/>
+      <g fill="#e9e5fb"><rect x="22" y="240" width="64" height="18" rx="9"/><rect x="94" y="240" width="64" height="18" rx="9"/><rect x="166" y="240" width="76" height="18" rx="9"/></g>
+    </g>
+    <g transform="translate(1066 404)">
+      <rect width="486" height="270" rx="16" fill="#fff" stroke="#e6e7ee"/>
+      <rect x="10" y="10" width="466" height="160" rx="10" fill="url(#sky3)"/><use href="#house" x="23" y="10" width="440" height="160"/>
+      <rect x="22" y="22" width="72" height="24" rx="12" fill="#6d4ae0"/><text x="36" y="39" font-size="12" font-weight="600" fill="#fff">For sale</text>
+      <rect x="22" y="190" width="160" height="16" rx="5" fill="#1b1d2b"/><rect x="22" y="216" width="250" height="11" rx="5" fill="#c9ccd8"/>
+      <g fill="#e9e5fb"><rect x="22" y="240" width="64" height="18" rx="9"/><rect x="94" y="240" width="64" height="18" rx="9"/><rect x="166" y="240" width="76" height="18" rx="9"/></g>
+    </g>
+    <g transform="translate(48 698)">
+      <rect width="486" height="270" rx="16" fill="#fff" stroke="#e6e7ee"/>
+      <rect x="10" y="10" width="466" height="160" rx="10" fill="url(#sky3)"/><use href="#house" x="23" y="10" width="440" height="160"/>
+      <rect x="22" y="190" width="140" height="16" rx="5" fill="#1b1d2b"/><rect x="22" y="216" width="240" height="11" rx="5" fill="#c9ccd8"/>
+    </g>
+    <g transform="translate(557 698)">
+      <rect width="486" height="270" rx="16" fill="#fff" stroke="#e6e7ee"/>
+      <rect x="10" y="10" width="466" height="160" rx="10" fill="url(#sky1)"/><use href="#house" x="23" y="10" width="440" height="160"/>
+      <rect x="22" y="190" width="120" height="16" rx="5" fill="#1b1d2b"/><rect x="22" y="216" width="210" height="11" rx="5" fill="#c9ccd8"/>
+    </g>
+    <g transform="translate(1066 698)">
+      <rect width="486" height="270" rx="16" fill="#fff" stroke="#e6e7ee"/>
+      <rect x="10" y="10" width="466" height="160" rx="10" fill="url(#sky2)"/><use href="#house" x="23" y="10" width="440" height="160"/>
+      <rect x="22" y="190" width="150" height="16" rx="5" fill="#1b1d2b"/><rect x="22" y="216" width="260" height="11" rx="5" fill="#c9ccd8"/>
+    </g>
+  </g>
+</svg>

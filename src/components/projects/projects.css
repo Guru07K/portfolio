@@ -1,0 +1,64 @@
+/* Projects showcase: transitions and the hidden-scrollbar reading pane. */
+@layer utilities {
+  @keyframes project-slide-next {
+    from { opacity: 0; transform: translateX(28px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes project-slide-prev {
+    from { opacity: 0; transform: translateX(-28px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes project-preview-next {
+    from { opacity: 0; transform: translateX(44px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes project-preview-prev {
+    from { opacity: 0; transform: translateX(-44px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes project-view-in {
+    from { opacity: 0; transform: scale(0.985); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .project-anim {
+    animation-duration: 0.6s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
+    animation-delay: var(--project-delay, 0ms);
+  }
+
+  .project-anim--next { animation-name: project-slide-next; }
+  .project-anim--prev { animation-name: project-slide-prev; }
+  .project-anim--preview-next { animation-name: project-preview-next; }
+  .project-anim--preview-prev { animation-name: project-preview-prev; }
+  .project-anim--view { animation-name: project-view-in; animation-duration: 0.45s; }
+
+  .project-scroll-pane {
+    overscroll-behavior: contain;
+    touch-action: pan-y pinch-zoom;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);
+  }
+
+  .project-scroll-pane::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-number {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent-border);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-anim {
+      animation-duration: 1ms;
+      animation-delay: 0ms;
+    }
+  }
+}

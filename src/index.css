@@ -1,0 +1,192 @@
+/* Utilities must beat the base rules below, as the component classes did. */
+@layer theme, base, utilities;
+
+/* Tailwind without preflight: the reset below stays the only base reset, so
+   element defaults render exactly as they did with the plain CSS files. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Theme and dark mode: the theme is set as data-theme on <html>. */
+@custom-variant dark (:root[data-theme="dark"] &);
+/* Plain :hover, not Tailwind's default media-wrapped hover, so hover styles
+   behave exactly as the old CSS did on touch screens too. */
+@custom-variant hover (&:hover);
+
+/* Colour and shadow tokens point at the CSS variables below, so utilities
+   such as bg-card or text-accent follow the light and dark themes. */
+@theme inline {
+  --color-page: var(--bg);
+  --color-page-elevated: var(--bg-elevated);
+  --color-body: var(--text);
+  --color-heading: var(--text-h);
+  --color-line: var(--border);
+  --color-card: var(--card-bg);
+  --color-tag: var(--tag-bg);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-bg);
+  --color-accent-line: var(--accent-border);
+
+  --color-header: var(--header-bg);
+  --color-header-text: var(--header-text);
+  --color-header-dim: var(--header-text-dim);
+  --color-header-border: var(--header-border);
+  --color-header-control: var(--header-control-bg);
+  --color-header-control-border: var(--header-control-border);
+  --color-header-control-hover: var(--header-control-hover-bg);
+  --color-header-tab-hover: var(--header-tab-hover-bg);
+
+  --shadow-card: var(--shadow);
+}
+
+@theme {
+  --animate-fade-in: fade-in 0.35s ease;
+  --animate-hero-cursor-blink: heroCursorBlink 0.8s infinite;
+  --animate-skills-marquee-ltr: skills-marquee-ltr linear infinite;
+  --animate-skills-marquee-rtl: skills-marquee-rtl linear infinite;
+
+  @keyframes skills-marquee-ltr {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes skills-marquee-rtl {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes heroCursorBlink {
+    0%,
+    45% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+:root {
+  --bg: #f7f7fb;
+  --bg-elevated: #ffffff;
+  --text: #5d5a66;
+  --text-h: #14121a;
+  --border: #e6e5ea;
+  --card-bg: #ffffff;
+  --tag-bg: rgba(124, 58, 237, 0.08);
+
+  --accent: #7c3aed;
+  --accent-bg: rgba(124, 58, 237, 0.1);
+  --accent-border: rgba(124, 58, 237, 0.4);
+
+  --header-bg: #ffffff;
+  --header-text: #14121a;
+  --header-text-dim: rgba(20, 18, 26, 0.62);
+  --header-border: var(--border);
+  --header-control-bg: rgba(20, 18, 26, 0.04);
+  --header-control-border: rgba(20, 18, 26, 0.12);
+  --header-control-hover-bg: rgba(20, 18, 26, 0.08);
+  --header-tab-hover-bg: rgba(20, 18, 26, 0.05);
+
+  --shadow:
+    rgba(20, 18, 26, 0.08) 0 10px 30px -10px, rgba(20, 18, 26, 0.06) 0 4px 6px -2px;
+
+  --sans: 'Segoe UI', system-ui, Roboto, sans-serif;
+  --heading: 'Segoe UI', system-ui, Roboto, sans-serif;
+
+  /* Single source for the navbar height. Section scroll offsets read it too. */
+  --header-height: 80px;
+
+  font: 16px/160% var(--sans);
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0b0b10;
+  --bg-elevated: #15151d;
+  --text: #a7a5af;
+  --text-h: #f3f3f6;
+  --border: #2a2a34;
+  --card-bg: #15151d;
+  --tag-bg: rgba(192, 132, 252, 0.12);
+
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.15);
+  --accent-border: rgba(192, 132, 252, 0.5);
+
+  --header-bg: #0b0b12;
+  --header-text: #f4f4f6;
+  --header-text-dim: rgba(244, 244, 246, 0.65);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --header-control-bg: rgba(255, 255, 255, 0.04);
+  --header-control-border: rgba(255, 255, 255, 0.1);
+  --header-control-hover-bg: rgba(255, 255, 255, 0.1);
+  --header-tab-hover-bg: rgba(255, 255, 255, 0.06);
+
+  --shadow:
+    rgba(0, 0, 0, 0.45) 0 10px 30px -10px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  #root {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--heading);
+    font-weight: 600;
+    color: var(--text-h);
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button {
+    font-family: inherit;
+  }
+}
