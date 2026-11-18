@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-const TABS = ["Home", "Education", "Experience", "Skill", "Project", "About", "Contact"];
 
 function SunIcon() {
   return (
@@ -45,7 +44,7 @@ function MoonIcon() {
   );
 }
 
-function Header({ activeTab, onTabChange, theme, onToggleTheme }) {
+function Header({ tabs, activeTab, onTabChange, theme, onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleTabClick = (tab) => {
@@ -57,7 +56,7 @@ function Header({ activeTab, onTabChange, theme, onToggleTheme }) {
     <header
       className={`sticky top-0 z-[100] pt-3 pointer-events-none before:content-[''] before:absolute before:inset-0 before:z-[-1] before:pointer-events-none before:bg-[rgba(247,247,251,0.9)] before:backdrop-blur-[20px] before:shadow-[0_6px_24px_rgba(0,0,0,0.06)] dark:before:bg-[rgba(11,11,16,0.9)] dark:before:shadow-[0_6px_24px_rgba(0,0,0,0.2)]`}
     >
-      <div className="mx-auto px-6 grid grid-cols-[1fr_auto_1fr] items-center gap-6 h-[calc(var(--header-height)_-_12px)] pointer-events-none">
+      <div className="mx-auto px-6 grid grid-cols-[1fr_auto_1fr] items-center gap-6 max-[860px]:grid-cols-[1fr_auto] max-[860px]:gap-3 max-[400px]:px-4 h-[calc(var(--header-height)_-_12px)] pointer-events-none">
         <button
           type="button"
           className="bg-transparent border-0 p-0 cursor-pointer flex items-center gap-2.5 shrink-0 justify-self-start pointer-events-auto"
@@ -73,13 +72,13 @@ function Header({ activeTab, onTabChange, theme, onToggleTheme }) {
         </button>
 
         <nav
-          className={`flex items-center gap-1.5 justify-self-center max-w-full pointer-events-auto p-2 rounded-[9999px] bg-[rgba(255,255,255,0.65)] border border-[rgba(255,255,255,0.35)] shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-[18px] dark:bg-[rgba(20,20,25,0.65)] dark:border-[rgba(255,255,255,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)] max-[1180px]:gap-0.5 max-[860px]:absolute max-[860px]:top-full max-[860px]:left-3 max-[860px]:right-3 max-[860px]:mt-2 max-[860px]:bg-header max-[860px]:rounded-[18px] max-[860px]:flex-col max-[860px]:items-stretch max-[860px]:gap-0.5 ${menuOpen ? "max-[860px]:flex" : "max-[860px]:hidden"}`}
+          className={`flex items-center gap-1.5 justify-self-center max-w-full pointer-events-auto p-2 rounded-[9999px] bg-[rgba(255,255,255,0.65)] border border-[rgba(255,255,255,0.35)] shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-[18px] dark:bg-[rgba(20,20,25,0.65)] dark:border-[rgba(255,255,255,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)] max-[1180px]:gap-0.5 max-[860px]:absolute max-[860px]:top-full max-[860px]:left-3 max-[860px]:right-3 max-[860px]:justify-self-stretch max-[860px]:mt-2 max-[860px]:bg-header max-[860px]:rounded-[18px] max-[860px]:flex-col max-[860px]:items-stretch max-[860px]:gap-0.5 ${menuOpen ? "max-[860px]:flex" : "max-[860px]:hidden"}`}
         >
-          {TABS.map((tab) => (
+          {tabs.map((tab) => (
             <button
               key={tab}
               type="button"
-              className={`border-0 py-2.5 px-4 rounded-[9999px] text-[15px] font-medium whitespace-nowrap cursor-pointer transition-[color,background-color] duration-200 ease-[ease] hover:text-header-text hover:bg-header-tab-hover max-[1180px]:text-[14px] max-[1180px]:py-[9px] max-[1180px]:px-3 max-[860px]:text-left max-[860px]:w-full max-[860px]:rounded-[10px] ${activeTab === tab ? "text-accent bg-accent-soft" : "text-header-dim bg-transparent"}`}
+              className={`border-0 py-2.5 px-4 rounded-[9999px] text-[15px] font-medium whitespace-nowrap cursor-pointer transition-[color,background-color] duration-200 ease-[ease] hover:text-header-text hover:bg-header-tab-hover max-[1180px]:text-[14px] max-[1180px]:py-[9px] max-[1180px]:px-3 max-[860px]:text-left max-[860px]:w-full max-[860px]:rounded-[10px] max-[860px]:py-3 max-[860px]:text-[15px] ${activeTab === tab ? "text-accent bg-accent-soft" : "text-header-dim bg-transparent"}`}
               onClick={() => handleTabClick(tab)}
             >
               {tab}

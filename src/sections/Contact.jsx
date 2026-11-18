@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { PROFILE } from "../data/profile";
 
-const CONTACT_EMAIL = "gnanaguru704@gmail.com";
+const CONTACT_EMAIL = PROFILE.email;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MESSAGE_LIMIT = 500;
 
 const QUICK_INFO = [
@@ -11,15 +13,6 @@ const QUICK_INFO = [
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <rect x="2" y="7" width="20" height="14" rx="2" />
         <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      </svg>
-    ),
-  },
-  {
-    title: "Project Discussion",
-    sub: "Have an idea?",
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" />
       </svg>
     ),
   },
@@ -162,7 +155,16 @@ const CONTACT_ITEMS = [
   },
 ];
 
-function Field({ id, label, icon, ...props }) {
+function FieldError({ id, error }) {
+  if (!error) return null;
+  return (
+    <p id={`${id}-error`} className="mt-1.5 text-[12.5px] font-medium text-[#dc2626] dark:text-[#f87171]">
+      {error}
+    </p>
+  );
+}
+
+function Field({ id, label, icon, error, ...props }) {
   return (
     <div className="mb-2">
       <label className="block text-[13px] font-semibold text-heading mb-2" htmlFor={id}>
@@ -174,9 +176,12 @@ function Field({ id, label, icon, ...props }) {
           className="w-full box-border py-[12px] pr-[14px] pb-[12px] pl-[40px] rounded-[10px] border border-line bg-page text-heading [font-family:inherit] text-[14px] focus:outline-none focus:border-accent-line"
           id={id}
           name={id}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={error ? `${id}-error` : undefined}
           {...props}
         />
       </div>
+      <FieldError id={id} error={error} />
     </div>
   );
 }
@@ -184,7 +189,14 @@ function Field({ id, label, icon, ...props }) {
 function Contact() {
   const [message, setMessage] = useState("");
   const [copiedKey, setCopiedKey] = useState(null);
-  const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [draft, setDraft] = useState(null); // prepared email, shown after "Send Email"
+  const [draftCopied, setDraftCopied] = useState(false);
+
+  const clearError = (event) => {
+    const { name } = event.target;
+    if (errors[name]) setErrors((current) => ({ ...current, [name]: undefined }));
+  };
 
   const handleCopy = (item) => {
     navigator.clipboard
@@ -196,15 +208,44 @@ function Contact() {
       .catch(() => {});
   };
 
+  // Validates the form, then opens the visitor's email app with a prefilled
+  // message. Nothing is sent from the website itself.
   const handleSubmit = (event) => {
     event.preventDefault();
-    const form = event.target;
-    const subject = encodeURIComponent(form.subject.value || "Portfolio message");
-    const body = encodeURIComponent(
-      `${form.message.value}\n\n— ${form.name.value} (${form.email.value})`,
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const values = Object.fromEntries(
+      ["name", "email", "subject", "message"].map((key) => [key, String(data.get(key) ?? "").trim()]),
     );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSent(true);
+
+    const nextErrors = {};
+    if (!values.name) nextErrors.name = "Please enter your name.";
+    if (!values.email) nextErrors.email = "Please enter your email address.";
+    else if (!EMAIL_PATTERN.test(values.email)) nextErrors.email = "Please enter a valid email address.";
+    if (!values.subject) nextErrors.subject = "Please add a subject.";
+    if (!values.message) nextErrors.message = "Please write a message.";
+    setErrors(nextErrors);
+
+    const firstInvalid = Object.keys(nextErrors)[0];
+    if (firstInvalid) {
+      form.querySelector(`[name="${firstInvalid}"]`)?.focus();
+      return;
+    }
+
+    const body = `Hi ${PROFILE.name},\r\n\r\n${values.message}\r\n\r\nName: ${values.name}\r\nEmail: ${values.email}`;
+    setDraft({ subject: values.subject, body });
+    setDraftCopied(false);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(values.subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  // Fallback for visitors without an email app configured.
+  const copyDraft = () => {
+    if (!draft) return;
+    const text = `To: ${CONTACT_EMAIL}\nSubject: ${draft.subject}\n\n${draft.body.replace(/\r\n/g, "\n")}`;
+    navigator.clipboard
+      ?.writeText(text)
+      .then(() => setDraftCopied(true))
+      .catch(() => {});
   };
 
   return (
@@ -217,11 +258,6 @@ function Contact() {
           <h2 className="text-[34px] mb-[14px] max-[600px]:text-[32px]">
             Get In <span className="bg-[linear-gradient(120deg,#3b82f6,var(--accent))] bg-clip-text text-transparent">Touch</span>
           </h2>
-          <p className="text-body text-[15px] leading-[1.65] max-w-[440px] mb-3">
-            I'm always open to discussing new opportunities, exciting
-            projects, or just having a friendly conversation about
-            technology.
-          </p>
 
           <div className="flex flex-wrap gap-[14px] mb-3">
             {QUICK_INFO.map((item) => (
@@ -247,7 +283,7 @@ function Contact() {
                 <span className="flex-1 min-w-0">
                   <strong className="block text-[14px] text-heading">{item.label}</strong>
                   {item.action === "link" ? (
-                    <a className="block text-[13px] text-body no-underline overflow-hidden text-ellipsis whitespace-nowrap" href={item.href} target="_blank" rel="noreferrer">
+                    <a className="block text-[13px] text-body no-underline overflow-hidden text-ellipsis whitespace-nowrap max-[860px]:py-[7px] max-[860px]:-my-[7px]" href={item.href} target="_blank" rel="noreferrer">
                       {item.value}
                     </a>
                   ) : (
@@ -281,10 +317,19 @@ function Contact() {
         </div>
 
         <div className="relative bg-card border border-line rounded-[24px] p-[18px] shadow-card overflow-hidden">
-          <h3 className="text-[20px] mb-1">Send Me a Message</h3>
-          <p className="text-body text-[14px] mb-3">Fill out the form below and I'll get back to you as soon as possible.</p>
+          <h3 className="text-[20px] mb-1">Let's Talk</h3>
+          <p className="text-body text-[14px] leading-[1.6] mb-3">
+            Have an opportunity, a project or an interesting idea? I'd love to hear from you.
+          </p>
+          <p className="flex items-start gap-2.5 mb-4 py-2.5 px-3 rounded-[10px] bg-accent-soft text-heading text-[13px] leading-[1.55] [&_svg]:shrink-0 [&_svg]:mt-[2px] [&_svg]:text-accent">
+            <MailIcon />
+            <span>
+              When you click <strong>Send Email</strong>, your default email app opens with your message already filled in.
+              Review it there and press Send to deliver it.
+            </span>
+          </p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-[1fr_1fr] gap-[18px] max-[600px]:grid-cols-[1fr]">
               <Field
                 id="name"
@@ -292,7 +337,10 @@ function Contact() {
                 icon={<PersonIcon />}
                 type="text"
                 placeholder="Enter your name"
+                autoComplete="name"
                 required
+                error={errors.name}
+                onInput={clearError}
               />
               <Field
                 id="email"
@@ -300,7 +348,10 @@ function Contact() {
                 icon={<MailIcon />}
                 type="email"
                 placeholder="Enter your email"
+                autoComplete="email"
                 required
+                error={errors.email}
+                onInput={clearError}
               />
             </div>
 
@@ -311,6 +362,8 @@ function Contact() {
               type="text"
               placeholder="What's this about?"
               required
+              error={errors.subject}
+              onInput={clearError}
             />
 
             <div className="mb-2">
@@ -329,19 +382,25 @@ function Contact() {
                   maxLength={MESSAGE_LIMIT}
                   placeholder="Write your message here..."
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                    clearError(e);
+                  }}
+                  aria-invalid={errors.message ? "true" : undefined}
+                  aria-describedby={errors.message ? "message-error" : undefined}
                   required
                 />
                 <span className="absolute right-[12px] bottom-[8px] text-[11px] text-body pointer-events-none">
                   {message.length}/{MESSAGE_LIMIT}
                 </span>
               </div>
+              <FieldError id="message" error={errors.message} />
             </div>
 
             <div className="flex items-stretch flex-wrap gap-[14px] mt-2">
               <button type="submit" className="inline-flex items-center justify-center gap-[10px] px-7 py-[14px] rounded-[12px] border-0 bg-[linear-gradient(120deg,#3b82f6,var(--accent))] text-white text-[15px] font-bold cursor-pointer transition-[transform,box-shadow] duration-200 ease-[ease] shadow-[0_14px_28px_-12px_var(--accent-border)] hover:[transform:translateY(-2px)]">
                 <SendIcon />
-                Send Message
+                Send Email
               </button>
               <div className="flex-1 min-w-[220px] flex items-center gap-[10px] py-[10px] px-4 rounded-[12px] bg-[rgba(34,197,94,0.12)] text-[#16a34a] text-[12.5px] leading-[1.4] dark:bg-[rgba(34,197,94,0.16)] dark:text-[#4ade80] [&_svg]:shrink-0">
                 <LockIcon />
@@ -353,16 +412,27 @@ function Contact() {
               </div>
             </div>
 
-            {sent && (
-              <p className="mt-[14px] text-[13px] font-semibold text-[#16a34a]">
-                Your email app should now be open with the message ready to send.
-              </p>
+            {draft && (
+              <div role="status" className="mt-[14px] p-3 rounded-[12px] border border-line bg-page text-[13px] leading-[1.55] text-body">
+                <p className="font-semibold text-heading">Your email app should now be open with this message.</p>
+                <p className="mt-1">
+                  It has not been sent yet. Review it there and press Send. If no email app opened, copy the
+                  message and send it to <a className="text-accent font-semibold no-underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </p>
+                <button
+                  type="button"
+                  onClick={copyDraft}
+                  className="mt-2.5 inline-flex items-center gap-2 h-9 px-3.5 rounded-[9px] border border-line bg-card text-heading text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:border-accent-line hover:text-accent"
+                >
+                  {draftCopied ? <CheckIcon /> : <CopyIcon />}
+                  {draftCopied ? "Message copied" : "Copy message"}
+                </button>
+              </div>
             )}
           </form>
         </div>
       </div>
 
-      <div className="w-full bg-[#0b0b12] text-[#e7e7ee] h-24 rounded-[60%_60%_0_0_/_40px_40px_0_0]" aria-hidden="true" />
     </section>
   );
 }

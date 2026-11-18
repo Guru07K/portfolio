@@ -1,40 +1,66 @@
 import { formatProjectNumber } from "../../data/projects";
-import { ArrowLeftIcon, ExternalLinkIcon, GithubIcon } from "./ProjectIcons";
-
+import { TECH_LOGOS } from "../../data/techLogos";
+import { ArrowLeftIcon, ExternalLinkIcon, FeatureIcon, GithubIcon } from "./ProjectIcons";
 const hasText = (value) => typeof value === "string" && value.trim().length > 0;
 const hasItems = (value) => Array.isArray(value) && value.length > 0;
+const toParagraphs = (value) => (Array.isArray(value) ? value : hasText(value) ? [value] : []);
 
-function DetailBlock({ title, children }) {
+function DetailSection({ title, children }) {
   return (
-    <section className="pb-7 mb-7 border-b border-line last:border-b-0 last:mb-0 last:pb-0">
-      <h4 className="m-0 mb-3 text-[11.5px] font-bold uppercase tracking-[1.4px] text-accent">{title}</h4>
+    <section className="mb-9 last:mb-0">
+      <h4 className="m-0 mb-4 flex items-center gap-3 text-[11.5px] font-bold uppercase tracking-[1.4px] text-accent">
+        {title}
+        <span className="flex-1 h-px bg-line" aria-hidden="true" />
+      </h4>
       {children}
     </section>
   );
 }
 
-function BulletList({ items }) {
+function FeatureCard({ feature }) {
   return (
-    <ul className="m-0 p-0 list-none flex flex-col gap-2.5">
-      {items.map((item) => (
-        <li
-          key={item}
-          className="relative pl-5 text-body text-[15px] leading-[1.7] before:content-[''] before:absolute before:left-0 before:top-[11px] before:w-[7px] before:h-[7px] before:rounded-full before:bg-accent-line"
-        >
-          {item}
-        </li>
-      ))}
-    </ul>
+    <li className="flex gap-3 p-4 rounded-[14px] border border-line bg-page">
+      <span className="shrink-0 flex items-center justify-center w-9 h-9 rounded-[10px] bg-accent-soft text-accent">
+        <FeatureIcon name={feature.icon} />
+      </span>
+      <div className="min-w-0">
+        <p className="text-[14px] font-semibold text-heading leading-[1.35]">{feature.title}</p>
+        <p className="mt-1 text-[13.5px] leading-[1.6] text-body">{feature.text}</p>
+      </div>
+    </li>
   );
 }
 
-const Paragraph = ({ children }) => <p className="text-body text-[15px] leading-[1.8] max-w-[68ch]">{children}</p>;
+// Technologies without an official logo (e.g. RBAC, cron jobs) are shown by
+// name only, rather than with an invented mark.
+function TechTile({ name }) {
+  const logo = TECH_LOGOS[name];
+  if (!logo) {
+    return (
+      <li className="flex items-center justify-center min-h-[76px] py-3 px-1.5 rounded-[12px] border border-line bg-page text-center">
+        <span className="text-[12.5px] font-semibold leading-[1.3] text-heading">{name}</span>
+      </li>
+    );
+  }
+  return (
+    <li className="flex flex-col items-center justify-start gap-2 min-h-[76px] py-3 px-1.5 rounded-[12px] border border-line bg-page text-center">
+      <span className="flex items-center justify-center w-8 h-8">
+        <img src={logo.src} alt={`${name} logo`} className={`w-full h-full object-contain ${logo.darkSrc ? "dark:hidden" : ""}`} draggable="false" decoding="async" />
+        {logo.darkSrc && (
+          <img src={logo.darkSrc} alt={`${name} logo`} className="w-full h-full object-contain hidden dark:block" draggable="false" decoding="async" />
+        )}
+      </span>
+      <span className="text-[11.5px] font-semibold leading-[1.3] text-heading">{name}</span>
+    </li>
+  );
+}
 
 /* Reading view shown inside the card. Only non-empty fields are rendered. */
 function ProjectDetails({ project, index, onBack, backButtonRef, scrollRef }) {
   const details = project.details ?? {};
   const links = project.links ?? {};
-  const overview = hasText(details.overview) ? details.overview : project.description;
+  const overview = toParagraphs(details.overview);
+  const paragraphs = overview.length ? overview : [project.description];
   const hasLinks = hasText(links.live) || hasText(links.source);
 
   return (
@@ -60,74 +86,73 @@ function ProjectDetails({ project, index, onBack, backButtonRef, scrollRef }) {
         ref={scrollRef}
         tabIndex={0}
         aria-label={`${project.title} details`}
-        className="project-scroll-pane flex-1 min-h-0 overflow-y-auto focus:outline-none px-[clamp(18px,3vw,44px)] pt-[clamp(20px,3.5vh,36px)] pb-12"
+        className="project-scroll-pane flex-1 min-h-0 overflow-y-auto focus:outline-none px-[clamp(18px,3vw,44px)] pt-[clamp(20px,3.5vh,32px)] pb-12"
       >
-        <h3 className="text-heading font-bold tracking-[-0.03em] leading-[1.1] text-[clamp(26px,3vw,42px)]">{project.title}</h3>
+        <h3 className="text-heading font-bold tracking-[-0.03em] leading-[1.1] text-[clamp(26px,3vw,40px)]">{project.title}</h3>
+        <p className="mt-3 max-w-[70ch] text-[15px] leading-[1.7] text-body">{project.description}</p>
 
-        <div className="mt-[clamp(20px,3.5vh,36px)] grid grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-[clamp(24px,4vw,64px)] max-[899px]:grid-cols-[minmax(0,1fr)]">
-          <div>
-            <DetailBlock title="Project Overview">
-              <Paragraph>{overview}</Paragraph>
-            </DetailBlock>
-
-            {hasText(details.purpose) && (
-              <DetailBlock title="Purpose">
-                <Paragraph>{details.purpose}</Paragraph>
-              </DetailBlock>
-            )}
+        <div className="mt-[clamp(24px,4vh,36px)] grid grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] gap-[clamp(24px,3.5vw,56px)] items-start max-[1023px]:grid-cols-[minmax(0,1fr)]">
+          <div className="min-w-0">
+            <DetailSection title="Project Overview">
+              <div className="flex flex-col gap-3.5">
+                {paragraphs.map((text) => (
+                  <p key={text} className="text-body text-[15px] leading-[1.8] max-w-[72ch]">{text}</p>
+                ))}
+              </div>
+            </DetailSection>
 
             {hasItems(details.features) && (
-              <DetailBlock title="Key Features">
-                <BulletList items={details.features} />
-              </DetailBlock>
+              <DetailSection title="Key Features">
+                <ul className="m-0 p-0 list-none grid grid-cols-2 gap-3 max-[700px]:grid-cols-1">
+                  {details.features.map((feature) => (
+                    <FeatureCard key={feature.title} feature={feature} />
+                  ))}
+                </ul>
+              </DetailSection>
             )}
 
-            {(hasText(details.role) || hasItems(details.responsibilities)) && (
-              <DetailBlock title="My Role & Responsibilities">
-                {hasText(details.role) && <Paragraph>{details.role}</Paragraph>}
-                {hasItems(details.responsibilities) && (
-                  <div className={hasText(details.role) ? "mt-4" : ""}>
-                    <BulletList items={details.responsibilities} />
-                  </div>
-                )}
-              </DetailBlock>
-            )}
-
-            {hasItems(details.contributions) && (
-              <DetailBlock title="Technical Contributions">
-                <BulletList items={details.contributions} />
-              </DetailBlock>
-            )}
-          </div>
-
-          <aside className="min-w-0">
             {hasItems(details.implementation) && (
-              <DetailBlock title="Implementation">
-                <dl className="m-0 rounded-[14px] border border-line bg-page divide-y divide-[var(--border)]">
-                  {details.implementation.map((group) => (
-                    <div key={group.label} className="grid grid-cols-[96px_1fr] gap-3 px-4 py-3">
-                      <dt className="text-[13px] font-semibold text-body">{group.label}</dt>
-                      <dd className="m-0 text-[13.5px] font-semibold text-heading">{group.items.join(", ")}</dd>
+              <DetailSection title="Technical Implementation">
+                <dl className="m-0 rounded-[14px] border border-line divide-y divide-[var(--border)] overflow-hidden">
+                  {details.implementation.map((item) => (
+                    <div key={item.title} className="grid grid-cols-[200px_minmax(0,1fr)] gap-4 px-4 py-3.5 max-[700px]:grid-cols-1 max-[700px]:gap-1">
+                      <dt className="text-[13.5px] font-semibold text-heading">{item.title}</dt>
+                      <dd className="m-0 text-[14px] leading-[1.65] text-body">{item.text}</dd>
                     </div>
                   ))}
                 </dl>
-              </DetailBlock>
+              </DetailSection>
             )}
 
-            {hasItems(project.tech) && (
-              <DetailBlock title="Technologies & Tools">
-                <ul className="m-0 p-0 list-none flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <li key={tech} className="py-[5px] px-3 rounded-[8px] bg-accent-soft text-accent text-[12.5px] font-semibold">
-                      {tech}
+            {hasItems(details.contributions) && (
+              <DetailSection title="My Contributions">
+                <ul className="m-0 p-0 list-none flex flex-col gap-3">
+                  {details.contributions.map((item) => (
+                    <li key={item} className="flex gap-3 text-[14.5px] leading-[1.7] text-body">
+                      <span className="shrink-0 mt-[3px] flex items-center justify-center w-5 h-5 rounded-full bg-accent-soft text-accent" aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+                      </span>
+                      {item}
                     </li>
                   ))}
                 </ul>
-              </DetailBlock>
+              </DetailSection>
+            )}
+          </div>
+
+          <aside className="min-w-0 min-[1024px]:sticky min-[1024px]:top-0">
+            {hasItems(project.tech) && (
+              <DetailSection title="Technologies Used">
+                <ul className="m-0 p-0 list-none grid grid-cols-3 gap-2.5 max-[1023px]:grid-cols-[repeat(auto-fill,minmax(96px,1fr))]">
+                  {project.tech.map((tech) => (
+                    <TechTile key={tech} name={tech} />
+                  ))}
+                </ul>
+              </DetailSection>
             )}
 
             {hasLinks && (
-              <DetailBlock title="Links">
+              <DetailSection title="Links">
                 <div className="flex flex-wrap gap-3">
                   {hasText(links.live) && (
                     <a href={links.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-accent text-white dark:text-[#0b0b10] no-underline text-[14px] font-semibold">
@@ -140,7 +165,7 @@ function ProjectDetails({ project, index, onBack, backButtonRef, scrollRef }) {
                     </a>
                   )}
                 </div>
-              </DetailBlock>
+              </DetailSection>
             )}
           </aside>
         </div>

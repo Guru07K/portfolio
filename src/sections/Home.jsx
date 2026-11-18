@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { HERO_STATS } from "../components/heroStatsClasses";
+import { EXPERIENCE, totalExperienceLabel } from "../data/experience";
+import { TECHNOLOGY_COUNT } from "../data/skills";
+import { RESUME_URL } from "../data/resume";
 
 
 const SOCIAL_LINKS = [
@@ -53,6 +56,7 @@ const SOCIAL_LINKS = [
   },
 ];
 
+
 const TYPED_PHRASES = ["Backend APIs", "IoT Platforms", "Scalable Server Applications", "Real-Time Systems"];
 
 function useTypewriter(phrases) {
@@ -90,11 +94,34 @@ function useTypewriter(phrases) {
 const HERO_BTN =
   "inline-flex items-center justify-center gap-[10px] h-[54px] px-[27px] py-0 rounded-[28px] no-underline text-[16px] font-semibold cursor-pointer transition-[transform,box-shadow,background] duration-[250ms] ease-[ease] [&_svg]:shrink-0 max-[600px]:w-full";
 
-function Home() {
+const CARD =
+  "rounded-[18px] border border-[#ece9f5] bg-white/90 shadow-[0_14px_30px_-18px_rgba(100,37,233,0.28)] backdrop-blur-[6px] dark:bg-[#15151f]/90 dark:border-[rgba(196,181,253,0.16)] dark:shadow-[0_14px_30px_-16px_rgba(0,0,0,0.6)]";
+const CARD_ICON =
+  "flex items-center justify-center w-10 h-10 shrink-0 rounded-[12px] bg-[#f0edff] text-[#6425e9] dark:bg-[rgba(124,58,237,0.18)] dark:text-[#c4b5fd]";
+
+function StatCard({ icon, value, unit, label, note }) {
+  return (
+    <div className={`${CARD} flex items-start gap-3.5 p-[18px] max-[600px]:flex-col max-[600px]:gap-2.5 max-[600px]:p-4`}>
+      <span className={CARD_ICON} aria-hidden="true">{icon}</span>
+      <div className="min-w-0">
+        <p className="leading-none text-[#101010] dark:text-[#f3f3f6]">
+          <span className="text-[30px] font-bold tracking-[-0.5px] max-[600px]:text-[26px]">{value}</span>
+          {unit && <span className="ml-1.5 text-[15px] font-semibold">{unit}</span>}
+        </p>
+        <p className="mt-1.5 text-[13.5px] font-medium leading-[1.35] text-[#3d4458] dark:text-[#c9ccd8]">{label}</p>
+        {note && <p className="mt-0.5 text-[12px] text-[#7a8196] dark:text-[#8f93a3]">{note}</p>}
+      </div>
+    </div>
+  );
+}
+
+function Home({ onNavigate }) {
   const typed = useTypewriter(TYPED_PHRASES);
+  const experience = totalExperienceLabel();
+  const current = EXPERIENCE.find((item) => item.end === null);
 
   return (
-    <section className="relative w-full grid grid-cols-[minmax(0,1fr)] overflow-hidden bg-white text-[#17213a] h-[100vh] dark:bg-[#0b0b12] dark:text-[#d7d9e6] max-[900px]:grid-cols-[1fr]">
+    <section className="relative w-full grid grid-cols-[minmax(0,1fr)] overflow-hidden bg-white text-[#17213a] h-[100vh] dark:bg-[#0b0b12] dark:text-[#d7d9e6] max-[900px]:grid-cols-[1fr] max-[900px]:h-auto max-[900px]:min-h-[100svh]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         <span className="absolute bg-[#f5f5ff] pointer-events-none dark:bg-[rgba(124,58,237,0.14)] w-[650px] h-[650px] left-[-430px] top-[-420px] rounded-[50%]" />
         <span className="hidden" />
@@ -122,7 +149,11 @@ function Home() {
 
         <div className="flex items-center gap-4 mt-[27px] max-[600px]:flex-col max-[600px]:items-stretch">
           <a
-            href="mailto:gnanaguru704@gmail.com"
+            href="#contact"
+            onClick={(event) => {
+              event.preventDefault();
+              onNavigate?.("Contact");
+            }}
             className={`${HERO_BTN} border-2 border-transparent text-white bg-[linear-gradient(135deg,#7629f5,#5e1fe1)] shadow-[0_10px_24px_rgba(100,37,233,0.22)] hover:opacity-90 hover:[transform:translateY(-2px)] hover:shadow-[0_14px_30px_rgba(100,37,233,0.3)]`}
           >
             <svg
@@ -140,8 +171,8 @@ function Home() {
             Let's Connect
           </a>
           <a
-            href="/resume.pdf"
-            download
+            href={RESUME_URL}
+            rel="noopener"
             className={`${HERO_BTN} border-[1.5px] border-solid border-[#c7a9ff] text-[#6425e9] bg-white hover:bg-[#faf7ff] hover:[transform:translateY(-2px)] dark:text-[#c4b5fd] dark:bg-transparent dark:border-[rgba(196,181,253,0.4)] dark:hover:bg-[rgba(196,181,253,0.1)]`}
           >
             <svg
@@ -178,7 +209,7 @@ function Home() {
           ))}
         </div>
 
-        <div className={HERO_STATS.wrap}>
+        <div className={`${HERO_STATS.wrap} max-[767px]:hidden`}>
           <div className={HERO_STATS.stat}>
             <span className={HERO_STATS.icon}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -186,7 +217,7 @@ function Home() {
               </svg>
             </span>
             <span>
-              <span className={HERO_STATS.value}>15+ </span>
+              <span className={HERO_STATS.value}>{TECHNOLOGY_COUNT} </span>
               <span className={HERO_STATS.label}>Technologies</span>
             </span>
           </div>
@@ -198,7 +229,7 @@ function Home() {
               </svg>
             </span>
             <span>
-              <span className={HERO_STATS.value}>2+ </span>
+              <span className={HERO_STATS.value}>{experience.value} </span>
               <span className={HERO_STATS.label}>Years Experience</span>
             </span>
           </div>
@@ -215,6 +246,51 @@ function Home() {
           </div>
         </div>
         </div>
+
+        {/* Mobile only (below 768px): stacked at-a-glance cards. */}
+        <aside
+          aria-label="At a glance"
+          className="grid grid-cols-2 gap-3 mt-8 max-[340px]:grid-cols-1 min-[768px]:hidden"
+        >
+          {current && (
+            <div className={`${CARD} col-span-full flex items-center gap-3.5 p-[18px] max-[600px]:p-4`}>
+              <span className="relative flex w-2.5 h-2.5 shrink-0" aria-hidden="true">
+                <span className="absolute inset-0 rounded-full bg-[#22c55e] opacity-60 animate-ping motion-reduce:animate-none" />
+                <span className="relative w-2.5 h-2.5 rounded-full bg-[#22c55e]" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11.5px] font-bold uppercase tracking-[1.5px] text-[#7a8196] dark:text-[#8f93a3]">Currently</p>
+                <p className="mt-0.5 text-[14.5px] font-semibold leading-[1.4] text-[#101010] dark:text-[#f3f3f6]">
+                  {current.role} at {current.company}
+                </p>
+                <p className="text-[12.5px] text-[#7a8196] dark:text-[#8f93a3]">{current.location}</p>
+              </div>
+            </div>
+          )}
+          <StatCard
+            icon={
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              </svg>
+            }
+            value={experience.value}
+            unit={experience.unit}
+            label="Software development experience"
+            note="Including internship"
+          />
+          <StatCard
+            icon={
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m12 3 9 5-9 5-9-5Z" />
+                <path d="m3 13 9 5 9-5" />
+              </svg>
+            }
+            value={TECHNOLOGY_COUNT}
+            label="Technologies & tools"
+            note="Languages, frameworks, databases & tooling"
+          />
+        </aside>
       </div>
     </section>
   );

@@ -50,9 +50,13 @@
     display: none;
   }
 
+  .project-number,
+  .project-number-total {
+    font-family: "Space Grotesk", var(--heading);
+  }
+
   .project-number {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--accent-border);
+    color: var(--accent);
   }
 
   @media (prefers-reduced-motion: reduce) {

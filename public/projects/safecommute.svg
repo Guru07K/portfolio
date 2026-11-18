@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Placeholder screenshot: employee transportation management dashboard. Replace with a real capture. -->
+  <rect width="1600" height="1000" fill="#f3f6f6"/>
+  <!-- sidebar -->
+  <rect width="240" height="1000" fill="#0f2a2a"/>
+  <rect x="28" y="28" width="34" height="34" rx="10" fill="#14b8a6"/><path d="M37 46l7 6 10-13" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="74" y="51" font-size="18" font-weight="700" fill="#e6f6f4">SafeCommute</text>
+  <rect x="18" y="100" width="204" height="42" rx="10" fill="#174444"/>
+  <g font-size="14" fill="#8fb1ad"><text x="40" y="127" fill="#e6f6f4">Trips</text><text x="40" y="177">Rosters</text><text x="40" y="221">Routes</text><text x="40" y="265">Drivers</text><text x="40" y="309">Vehicles</text><text x="40" y="353">Attendance</text></g>
+  <!-- header -->
+  <text x="280" y="58" font-size="26" font-weight="700" fill="#102020">Today's trips</text>
+  <rect x="280" y="74" width="300" height="10" rx="5" fill="#9fb3b1"/>
+  <rect x="1300" y="30" width="120" height="42" rx="12" fill="#fff" stroke="#d9e3e2"/><rect x="1432" y="30" width="136" height="42" rx="12" fill="#0d9488"/>
+  <text x="1456" y="57" font-size="14" font-weight="600" fill="#fff">+ Schedule</text>
+  <!-- stats -->
+  <g>
+    <rect x="280" y="112" width="306" height="104" rx="16" fill="#fff" stroke="#dde7e6"/><rect x="304" y="134" width="90" height="10" rx="5" fill="#9fb3b1"/><rect x="304" y="158" width="70" height="30" rx="6" fill="#102020"/><text x="304" y="204" font-size="13" fill="#0d9488">Pickups</text>
+    <rect x="602" y="112" width="306" height="104" rx="16" fill="#fff" stroke="#dde7e6"/><rect x="626" y="134" width="90" height="10" rx="5" fill="#9fb3b1"/><rect x="626" y="158" width="70" height="30" rx="6" fill="#102020"/><text x="626" y="204" font-size="13" fill="#0d9488">Drops</text>
+    <rect x="924" y="112" width="306" height="104" rx="16" fill="#fff" stroke="#dde7e6"/><rect x="948" y="134" width="90" height="10" rx="5" fill="#9fb3b1"/><rect x="948" y="158" width="70" height="30" rx="6" fill="#102020"/><text x="948" y="204" font-size="13" fill="#0d9488">Vehicles</text>
+    <rect x="1246" y="112" width="322" height="104" rx="16" fill="#fff" stroke="#dde7e6"/><rect x="1270" y="134" width="90" height="10" rx="5" fill="#9fb3b1"/><rect x="1270" y="158" width="70" height="30" rx="6" fill="#102020"/><text x="1270" y="204" font-size="13" fill="#0d9488">Boarded</text>
+  </g>
+  <!-- map -->
+  <rect x="280" y="236" width="780" height="520" rx="18" fill="#e4eeec"/>
+  <g stroke="#ffffff" stroke-width="18" fill="none" stroke-linecap="round">
+    <path d="M280 360 C 420 380, 520 300, 700 330 S 940 420, 1060 380"/>
+    <path d="M460 236 C 470 400, 430 560, 470 756"/>
+    <path d="M820 236 C 800 420, 880 600, 860 756"/>
+    <path d="M280 640 C 480 610, 700 680, 1060 620"/>
+  </g>
+  <rect x="560" y="430" width="140" height="100" rx="8" fill="#d3e5e1"/><rect x="900" y="470" width="110" height="80" rx="8" fill="#d3e5e1"/><rect x="320" y="440" width="90" height="120" rx="8" fill="#d3e5e1"/>
+  <path d="M360 680 C 420 620, 470 560, 520 470 S 690 360, 760 400 S 880 330, 980 300" stroke="#0d9488" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="1 0"/>
+  <g><circle cx="360" cy="680" r="13" fill="#0d9488"/><circle cx="360" cy="680" r="5" fill="#fff"/>
+  <circle cx="520" cy="470" r="11" fill="#fff" stroke="#0d9488" stroke-width="5"/><circle cx="760" cy="400" r="11" fill="#fff" stroke="#0d9488" stroke-width="5"/>
+  <circle cx="980" cy="300" r="15" fill="#f97316"/><circle cx="980" cy="300" r="6" fill="#fff"/></g>
+  <rect x="620" y="356" width="116" height="40" rx="12" fill="#102020"/><rect x="636" y="370" width="16" height="12" rx="3" fill="#5eead4"/><rect x="660" y="371" width="60" height="10" rx="5" fill="#cbe9e5"/>
+  <!-- trip list -->
+  <rect x="1080" y="236" width="488" height="520" rx="18" fill="#fff" stroke="#dde7e6"/>
+  <text x="1106" y="278" font-size="18" font-weight="700" fill="#102020">Trip roster</text>
+  <g>
+    <rect x="1104" y="300" width="440" height="84" rx="14" fill="#f5f9f8"/><circle cx="1140" cy="342" r="20" fill="#cdeee9"/><rect x="1176" y="324" width="150" height="12" rx="6" fill="#102020"/><rect x="1176" y="346" width="210" height="9" rx="4.5" fill="#9fb3b1"/><rect x="1436" y="330" width="88" height="24" rx="12" fill="#ccf3ec"/><text x="1450" y="347" font-size="12" font-weight="700" fill="#0f766e">Boarded</text>
+    <rect x="1104" y="396" width="440" height="84" rx="14" fill="#f5f9f8"/><circle cx="1140" cy="438" r="20" fill="#cdeee9"/><rect x="1176" y="420" width="130" height="12" rx="6" fill="#102020"/><rect x="1176" y="442" width="190" height="9" rx="4.5" fill="#9fb3b1"/><rect x="1436" y="426" width="88" height="24" rx="12" fill="#ccf3ec"/><text x="1450" y="443" font-size="12" font-weight="700" fill="#0f766e">Boarded</text>
+    <rect x="1104" y="492" width="440" height="84" rx="14" fill="#f5f9f8"/><circle cx="1140" cy="534" r="20" fill="#cdeee9"/><rect x="1176" y="516" width="160" height="12" rx="6" fill="#102020"/><rect x="1176" y="538" width="170" height="9" rx="4.5" fill="#9fb3b1"/><rect x="1436" y="522" width="88" height="24" rx="12" fill="#fff1e2"/><text x="1453" y="539" font-size="12" font-weight="700" fill="#c2410c">Pending</text>
+    <rect x="1104" y="588" width="440" height="84" rx="14" fill="#f5f9f8"/><circle cx="1140" cy="630" r="20" fill="#cdeee9"/><rect x="1176" y="612" width="120" height="12" rx="6" fill="#102020"/><rect x="1176" y="634" width="200" height="9" rx="4.5" fill="#9fb3b1"/><rect x="1436" y="618" width="88" height="24" rx="12" fill="#fff1e2"/><text x="1453" y="635" font-size="12" font-weight="700" fill="#c2410c">Pending</text>
+  </g>
+  <!-- drivers & vehicles -->
+  <rect x="280" y="776" width="1288" height="196" rx="18" fill="#fff" stroke="#dde7e6"/>
+  <text x="306" y="818" font-size="18" font-weight="700" fill="#102020">Drivers &amp; vehicles</text>
+  <rect x="280" y="840" width="1288" height="36" fill="#f5f9f8"/>
+  <g fill="#9fb3b1"><rect x="306" y="853" width="80" height="9" rx="4.5"/><rect x="640" y="853" width="70" height="9" rx="4.5"/><rect x="960" y="853" width="80" height="9" rx="4.5"/><rect x="1280" y="853" width="60" height="9" rx="4.5"/></g>
+  <g fill="#334846"><rect x="306" y="900" width="170" height="11" rx="5.5"/><rect x="640" y="900" width="110" height="11" rx="5.5"/><rect x="960" y="900" width="140" height="11" rx="5.5"/><rect x="306" y="940" width="150" height="11" rx="5.5"/><rect x="640" y="940" width="120" height="11" rx="5.5"/><rect x="960" y="940" width="120" height="11" rx="5.5"/></g>
+  <rect x="1280" y="894" width="80" height="22" rx="11" fill="#ccf3ec"/><rect x="1280" y="934" width="80" height="22" rx="11" fill="#e5ecf0"/>
+</svg>

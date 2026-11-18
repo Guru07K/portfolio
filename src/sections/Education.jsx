@@ -63,7 +63,7 @@ const CalendarIcon = () => (
 
 function Education() {
   return (
-    <section className="animate-fade-in relative grid grid-cols-[45fr_55fr] items-center gap-10 p-[32px_max(24px,calc((100%_-_1200px)/2))_60px] overflow-hidden box-border bg-white text-[#17213a] h-[100vh] dark:bg-[#0b0b12] dark:text-[#d7d9e6] max-[900px]:grid-cols-[1fr]">
+    <section className="animate-fade-in relative grid grid-cols-[45fr_55fr] items-center gap-10 p-[32px_max(24px,calc((100%_-_1200px)/2))_60px] overflow-hidden box-border bg-white text-[#17213a] h-[100vh] dark:bg-[#0b0b12] dark:text-[#d7d9e6] max-[900px]:grid-cols-[1fr] max-[900px]:h-auto max-[900px]:min-h-[100svh] max-[900px]:gap-8 max-[900px]:content-start max-[600px]:px-4 max-[767px]:min-h-0 max-[767px]:py-12 max-[767px]:gap-6">
       <svg
         className="absolute z-0 top-0 left-0 w-[46%] h-full opacity-[0.22] blur-[20px] pointer-events-none"
         viewBox="0 0 700 550"
@@ -84,11 +84,14 @@ function Education() {
       </svg>
 
       <div className="relative z-[1]">
-        <p className="text-body text-[15px] leading-[1.7] max-w-[320px] mb-7 max-[900px]:max-w-none">
+        <h2 className="text-[30px] leading-[1.15] mb-3 min-[901px]:sr-only max-[400px]:text-[27px]">
+          My <span className="text-accent">Education</span>
+        </h2>
+        <p className="text-body text-[15px] leading-[1.7] max-w-[320px] mb-7 max-[900px]:max-w-none max-[900px]:mb-5 max-[767px]:hidden">
           Here is my academic journey that has shaped my skills and knowledge
           in technology and development.
         </p>
-        <blockquote className="relative pl-[18px] border-l-[3px] border-l-accent [border-left-style:solid] max-w-[300px] max-[900px]:max-w-none">
+        <blockquote className="relative pl-[18px] border-l-[3px] border-l-accent [border-left-style:solid] max-w-[300px] max-[900px]:max-w-none max-[767px]:hidden">
           <p className="mb-[6px] text-heading text-[16px] italic leading-[1.5]">&ldquo;Learning never exhausts the mind.&rdquo;</p>
           <cite className="text-body text-[13px] not-italic">— Leonardo da Vinci</cite>
         </blockquote>
@@ -97,16 +100,16 @@ function Education() {
           src={eduGraphic}
           alt=""
           aria-hidden="true"
-          className="block w-[300px] max-w-full mt-8 drop-shadow-[0_20px_25px_rgba(20,18,26,0.15)]"
+          className="block w-[300px] max-w-full mt-8 drop-shadow-[0_20px_25px_rgba(20,18,26,0.15)] max-[900px]:hidden"
         />
       </div>
 
-      <div className="relative z-[1] min-w-0 flex flex-col gap-7 before:content-[''] before:absolute before:top-[22px] before:bottom-[22px] before:left-[21px] before:w-[2px] before:bg-line">
+      <div className="relative z-[1] min-w-0 flex flex-col gap-7 before:content-[''] before:absolute before:top-[22px] before:bottom-[22px] before:left-[21px] before:w-[2px] before:bg-line max-[600px]:gap-4 max-[600px]:before:hidden">
         {EDUCATION.map((item) => (
           <div className="relative min-w-0 flex items-start gap-5" key={item.degree}>
-            <span className="relative z-[1] shrink-0 w-[44px] h-[44px] rounded-[50%] flex items-center justify-center bg-accent-soft text-accent">{ICONS[item.icon]}</span>
-            <span className="absolute top-[20px] left-[44px] w-2 h-2 rounded-[50%] bg-accent" aria-hidden="true" />
-            <div className="flex-1 min-w-0 flex items-start justify-between gap-4 bg-card border border-line rounded-[16px] py-[22px] px-6 shadow-card max-[600px]:flex-col">
+            <span className="relative z-[1] shrink-0 w-[44px] h-[44px] rounded-[50%] flex items-center justify-center bg-accent-soft text-accent max-[600px]:hidden">{ICONS[item.icon]}</span>
+            <span className="absolute top-[20px] left-[44px] w-2 h-2 rounded-[50%] bg-accent max-[600px]:hidden" aria-hidden="true" />
+            <div className="flex-1 min-w-0 flex items-start justify-between gap-4 bg-card border border-line rounded-[16px] py-[22px] px-6 shadow-card max-[600px]:flex-col max-[600px]:gap-3 max-[600px]:py-5 max-[600px]:px-5">
               <div className="min-w-0 flex-1">
                 <h3 className="text-[18px] mb-1">{item.degree}</h3>
                 <p className="text-accent text-[14px] font-semibold mb-3">{item.field}</p>

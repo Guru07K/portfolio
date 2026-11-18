@@ -9,11 +9,11 @@ const stepButton =
 function ProjectIndicator({ projects, activeIndex, onSelect }) {
   return (
     <nav className="flex items-center gap-4 max-[420px]:gap-2.5" aria-label="Project navigation">
-      <ol className="m-0 p-0 list-none flex items-center gap-2.5">
+      <ol className="m-0 p-0 list-none flex items-center gap-2.5 max-[480px]:gap-1.5">
         {projects.map((project, i) => (
           <Fragment key={project.id}>
             {i > 0 && (
-              <li aria-hidden="true" className="relative w-[clamp(20px,3vw,40px)] h-[2px] rounded-full bg-line overflow-hidden">
+              <li aria-hidden="true" className="relative w-[clamp(20px,2.4vw,32px)] max-[480px]:w-3 max-[399px]:w-2 h-[2px] rounded-full bg-line overflow-hidden">
                 <span
                   className="absolute inset-0 bg-accent origin-left transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   style={{ transform: `scaleX(${i <= activeIndex ? 1 : 0})` }}
@@ -26,7 +26,7 @@ function ProjectIndicator({ projects, activeIndex, onSelect }) {
                 onClick={() => onSelect(i)}
                 aria-current={i === activeIndex ? "step" : undefined}
                 aria-label={`Project ${formatProjectNumber(i)}: ${project.title}`}
-                className={`bg-transparent border-0 p-1 cursor-pointer text-[13px] font-bold tabular-nums tracking-[0.5px] transition-colors duration-200 hover:text-accent ${i === activeIndex ? "text-accent" : "text-body opacity-70"}`}
+                className={`inline-flex items-center justify-center min-w-8 h-8 px-1 bg-transparent border-0 cursor-pointer text-[13px] font-bold tabular-nums tracking-[0.5px] transition-colors duration-200 hover:text-accent ${i === activeIndex ? "text-accent" : "text-body opacity-70"}`}
               >
                 {formatProjectNumber(i)}
               </button>
@@ -34,7 +34,7 @@ function ProjectIndicator({ projects, activeIndex, onSelect }) {
           </Fragment>
         ))}
       </ol>
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 max-[399px]:hidden">
         <button
           type="button"
           className={stepButton}

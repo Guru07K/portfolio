@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="Segoe UI, system-ui, sans-serif">
+  <!-- Placeholder screenshot: real-time chat application. Replace with a real capture. -->
+  <defs>
+    <linearGradient id="img" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a5b4fc"/><stop offset="1" stop-color="#f0abfc"/></linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="#0f1220"/>
+  <!-- conversations -->
+  <rect width="440" height="1000" fill="#151a2c"/><rect x="440" width="1" height="1000" fill="#262c44"/>
+  <text x="32" y="58" font-size="24" font-weight="700" fill="#eef0fb">Chats</text>
+  <rect x="32" y="84" width="376" height="44" rx="12" fill="#1d2338"/><circle cx="58" cy="106" r="7" fill="none" stroke="#6b7394" stroke-width="2.5"/><rect x="76" y="100" width="150" height="10" rx="5" fill="#4a5276"/>
+  <g>
+    <rect x="16" y="150" width="408" height="84" rx="14" fill="#262d4a"/>
+    <circle cx="62" cy="192" r="24" fill="#818cf8"/><circle cx="80" cy="210" r="7" fill="#22c55e" stroke="#262d4a" stroke-width="3"/>
+    <rect x="100" y="176" width="140" height="13" rx="6.5" fill="#eef0fb"/><rect x="100" y="200" width="220" height="10" rx="5" fill="#8a92b6"/>
+    <circle cx="396" cy="204" r="11" fill="#6366f1"/><text x="392" y="209" font-size="12" font-weight="700" fill="#fff">2</text>
+    <circle cx="62" cy="282" r="24" fill="#f472b6"/><rect x="100" y="266" width="120" height="13" rx="6.5" fill="#cfd3ea"/><rect x="100" y="290" width="200" height="10" rx="5" fill="#59618a"/>
+    <circle cx="62" cy="366" r="24" fill="#34d399"/><circle cx="80" cy="384" r="7" fill="#22c55e" stroke="#151a2c" stroke-width="3"/><rect x="100" y="350" width="160" height="13" rx="6.5" fill="#cfd3ea"/><rect x="100" y="374" width="180" height="10" rx="5" fill="#59618a"/>
+    <circle cx="62" cy="450" r="24" fill="#fbbf24"/><rect x="100" y="434" width="110" height="13" rx="6.5" fill="#cfd3ea"/><rect x="100" y="458" width="230" height="10" rx="5" fill="#59618a"/>
+    <circle cx="62" cy="534" r="24" fill="#60a5fa"/><rect x="100" y="518" width="140" height="13" rx="6.5" fill="#cfd3ea"/><rect x="100" y="542" width="170" height="10" rx="5" fill="#59618a"/>
+    <circle cx="62" cy="618" r="24" fill="#c084fc"/><rect x="100" y="602" width="130" height="13" rx="6.5" fill="#cfd3ea"/><rect x="100" y="626" width="210" height="10" rx="5" fill="#59618a"/>
+  </g>
+  <!-- conversation header -->
+  <rect x="441" width="1159" height="88" fill="#131829"/><rect x="441" y="88" width="1159" height="1" fill="#262c44"/>
+  <circle cx="496" cy="44" r="24" fill="#818cf8"/><rect x="534" y="28" width="150" height="13" rx="6.5" fill="#eef0fb"/>
+  <circle cx="540" cy="58" r="5" fill="#22c55e"/><text x="552" y="63" font-size="13" fill="#7e87ad">online</text>
+  <circle cx="1490" cy="44" r="18" fill="#1d2338"/><circle cx="1540" cy="44" r="18" fill="#1d2338"/>
+  <!-- messages -->
+  <g>
+    <rect x="490" y="126" width="420" height="64" rx="18" fill="#1f2540"/><rect x="514" y="146" width="330" height="10" rx="5" fill="#b9bfdc"/><rect x="514" y="166" width="220" height="10" rx="5" fill="#b9bfdc"/>
+    <rect x="1080" y="214" width="460" height="64" rx="18" fill="#6366f1"/><rect x="1104" y="234" width="390" height="10" rx="5" fill="#e0e3ff"/><rect x="1104" y="254" width="250" height="10" rx="5" fill="#e0e3ff"/>
+    <text x="1500" y="298" font-size="12" fill="#7e87ad">✓✓</text>
+    <rect x="490" y="320" width="380" height="260" rx="18" fill="#1f2540"/><rect x="502" y="332" width="356" height="200" rx="12" fill="url(#img)"/>
+    <path d="M540 512l70-80 50 54 36-36 90 62z" fill="#ffffff" opacity="0.55"/><circle cx="800" cy="380" r="22" fill="#ffffff" opacity="0.6"/>
+    <rect x="514" y="548" width="200" height="10" rx="5" fill="#b9bfdc"/>
+    <rect x="1180" y="608" width="360" height="48" rx="18" fill="#6366f1"/><rect x="1204" y="627" width="300" height="10" rx="5" fill="#e0e3ff"/>
+    <rect x="490" y="684" width="300" height="48" rx="18" fill="#1f2540"/><rect x="514" y="703" width="240" height="10" rx="5" fill="#b9bfdc"/>
+    <rect x="490" y="756" width="96" height="40" rx="20" fill="#1f2540"/><circle cx="514" cy="776" r="5" fill="#7e87ad"/><circle cx="538" cy="776" r="5" fill="#9aa2c6"/><circle cx="562" cy="776" r="5" fill="#b9bfdc"/>
+  </g>
+  <!-- composer -->
+  <rect x="441" y="900" width="1159" height="100" fill="#131829"/><rect x="441" y="900" width="1159" height="1" fill="#262c44"/>
+  <circle cx="496" cy="950" r="20" fill="#1d2338"/><path d="M488 950h16M496 942v16" stroke="#9aa2c6" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="532" y="924" width="940" height="52" rx="26" fill="#1d2338"/><rect x="560" y="945" width="200" height="10" rx="5" fill="#4a5276"/>
+  <circle cx="1530" cy="950" r="26" fill="#6366f1"/><path d="M1519 950l22-10-8 22-4-8z" fill="#fff"/>
+</svg>

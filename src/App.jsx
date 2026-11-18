@@ -7,16 +7,21 @@ import Skills from './sections/Skills'
 import Projects from './sections/Projects'
 import About from './sections/About'
 import Contact from './sections/Contact'
+import Footer from './components/Footer'
+import { scrollToSection } from './utils/scrollToSection'
 
+// Page order = navbar order.
 const SECTIONS = [
   { tab: 'Home', Component: Home },
-  { tab: 'Education', Component: Education },
   { tab: 'Experience', Component: Experience },
-  { tab: 'Skill', Component: Skills },
   { tab: 'Project', Component: Projects },
+  { tab: 'Education', Component: Education },
+  { tab: 'Skill', Component: Skills },
   { tab: 'About', Component: About },
   { tab: 'Contact', Component: Contact },
 ]
+
+const TABS = SECTIONS.map(({ tab }) => tab)
 
 function getInitialTheme() {
   const saved = localStorage.getItem('theme')
@@ -60,12 +65,13 @@ function App() {
 
   const handleNavigate = (tab) => {
     setActiveTab(tab)
-    sectionRefs.current[tab]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    scrollToSection(sectionRefs.current[tab])
   }
 
   return (
     <>
       <Header
+        tabs={TABS}
         activeTab={activeTab}
         onTabChange={handleNavigate}
         theme={theme}
@@ -86,6 +92,7 @@ function App() {
           </div>
         ))}
       </main>
+      <Footer />
     </>
   )
 }
