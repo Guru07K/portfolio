@@ -37,6 +37,12 @@ const MailIcon = () => (
   </svg>
 );
 
+const PhoneIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z" />
+  </svg>
+);
+
 const PinIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -122,6 +128,16 @@ const CONTACT_ITEMS = [
     bg: "rgba(236, 72, 153, 0.14)",
     color: "#ec4899",
     action: "copy",
+  },
+  {
+    key: "phone",
+    label: "Phone",
+    value: PROFILE.phoneDisplay,
+    href: `tel:${PROFILE.phone}`,
+    icon: <PhoneIcon />,
+    bg: "rgba(34, 197, 94, 0.14)",
+    color: "#16a34a",
+    action: "call",
   },
   {
     key: "location",
@@ -282,8 +298,12 @@ function Contact() {
                 </span>
                 <span className="flex-1 min-w-0">
                   <strong className="block text-[14px] text-heading">{item.label}</strong>
-                  {item.action === "link" ? (
-                    <a className="block text-[13px] text-body no-underline overflow-hidden text-ellipsis whitespace-nowrap max-[860px]:py-[7px] max-[860px]:-my-[7px]" href={item.href} target="_blank" rel="noreferrer">
+                  {item.action === "link" || item.action === "call" ? (
+                    <a
+                      className="block text-[13px] text-body no-underline overflow-hidden text-ellipsis whitespace-nowrap max-[860px]:py-[7px] max-[860px]:-my-[7px]"
+                      href={item.href}
+                      {...(item.action === "link" ? { target: "_blank", rel: "noreferrer" } : {})}
+                    >
                       {item.value}
                     </a>
                   ) : (
@@ -301,13 +321,12 @@ function Contact() {
                   </button>
                 ) : (
                   <a
-                    className="shrink-0 w-8 h-8 rounded-[8px] border border-line bg-transparent text-body flex items-center justify-center cursor-pointer transition-[background-color,color] duration-200 ease-[ease] hover:bg-accent hover:text-white hover:border-accent"
+                    className="shrink-0 w-8 h-8 rounded-[8px] border border-line bg-transparent text-body flex items-center justify-center cursor-pointer transition-[background-color,color] duration-200 ease-[ease] hover:bg-accent hover:text-white hover:border-accent [&_svg]:w-[14px] [&_svg]:h-[14px]"
                     href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Open ${item.label}`}
+                    {...(item.action === "link" ? { target: "_blank", rel: "noreferrer" } : {})}
+                    aria-label={item.action === "call" ? `Call ${item.value}` : `Open ${item.label}`}
                   >
-                    <ExternalIcon />
+                    {item.action === "call" ? <PhoneIcon /> : <ExternalIcon />}
                   </a>
                 )}
               </div>

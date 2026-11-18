@@ -82,92 +82,97 @@ function ProjectDetails({ project, index, onBack, backButtonRef, scrollRef }) {
         </div>
       </header>
 
+      {/*
+        Desktop (1024px+): two columns. The left column (title, summary, links)
+        stays put; only the right column scrolls. Below 1024px the columns stack
+        and the whole body scrolls as one pane. `scrollRef` marks the details
+        area; usePinnedProjects lets wheel/touch scroll whichever pane inside it
+        can scroll.
+      */}
       <div
         ref={scrollRef}
-        tabIndex={0}
-        aria-label={`${project.title} details`}
-        className="project-scroll-pane flex-1 min-h-0 overflow-y-auto focus:outline-none px-[clamp(18px,3vw,44px)] pt-[clamp(20px,3.5vh,32px)] pb-12"
+        className="project-details-body flex-1 min-h-0 grid grid-cols-[minmax(0,1fr)] content-start min-[1024px]:grid-cols-[minmax(280px,34fr)_minmax(0,66fr)] min-[1024px]:content-stretch"
       >
-        <h3 className="text-heading font-bold tracking-[-0.03em] leading-[1.1] text-[clamp(26px,3vw,40px)]">{project.title}</h3>
-        <p className="mt-3 max-w-[70ch] text-[15px] leading-[1.7] text-body">{project.description}</p>
+        <div className="project-details-aside min-w-0 px-[clamp(18px,3vw,44px)] pt-[clamp(20px,3.5vh,32px)] min-[1024px]:pb-8 min-[1024px]:border-r min-[1024px]:border-line">
+          <h3 className="text-heading font-bold tracking-[-0.03em] leading-[1.1] text-[clamp(26px,3vw,40px)]">{project.title}</h3>
+          <p className="mt-3 max-w-[70ch] text-[15px] leading-[1.7] text-body">{project.description}</p>
 
-        <div className="mt-[clamp(24px,4vh,36px)] grid grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] gap-[clamp(24px,3.5vw,56px)] items-start max-[1023px]:grid-cols-[minmax(0,1fr)]">
-          <div className="min-w-0">
-            <DetailSection title="Project Overview">
-              <div className="flex flex-col gap-3.5">
-                {paragraphs.map((text) => (
-                  <p key={text} className="text-body text-[15px] leading-[1.8] max-w-[72ch]">{text}</p>
+          {hasLinks && (
+            <div className="mt-6 flex flex-wrap gap-3">
+              {hasText(links.live) && (
+                <a href={links.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-accent text-white dark:text-[#0b0b10] no-underline text-[14px] font-semibold">
+                  <ExternalLinkIcon /> Live Demo
+                </a>
+              )}
+              {hasText(links.source) && (
+                <a href={links.source} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 h-10 px-4 rounded-full border border-line text-heading no-underline text-[14px] font-semibold hover:border-accent-line hover:text-accent">
+                  <GithubIcon /> Source Code
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div
+          tabIndex={0}
+          aria-label={`${project.title} details`}
+          className="project-details-main min-w-0 focus:outline-none px-[clamp(18px,3vw,44px)] pt-[clamp(24px,4vh,36px)] pb-12 min-[1024px]:pt-[clamp(20px,3.5vh,32px)]"
+        >
+          {hasItems(project.tech) && (
+            <DetailSection title="Technologies Used">
+              <ul className="m-0 p-0 list-none grid grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-2.5">
+                {project.tech.map((tech) => (
+                  <TechTile key={tech} name={tech} />
                 ))}
-              </div>
+              </ul>
             </DetailSection>
+          )}
 
-            {hasItems(details.features) && (
-              <DetailSection title="Key Features">
-                <ul className="m-0 p-0 list-none grid grid-cols-2 gap-3 max-[700px]:grid-cols-1">
-                  {details.features.map((feature) => (
-                    <FeatureCard key={feature.title} feature={feature} />
-                  ))}
-                </ul>
-              </DetailSection>
-            )}
+          <DetailSection title="Project Overview">
+            <div className="flex flex-col gap-3.5">
+              {paragraphs.map((text) => (
+                <p key={text} className="text-body text-[15px] leading-[1.8] max-w-[72ch]">{text}</p>
+              ))}
+            </div>
+          </DetailSection>
 
-            {hasItems(details.implementation) && (
-              <DetailSection title="Technical Implementation">
-                <dl className="m-0 rounded-[14px] border border-line divide-y divide-[var(--border)] overflow-hidden">
-                  {details.implementation.map((item) => (
-                    <div key={item.title} className="grid grid-cols-[200px_minmax(0,1fr)] gap-4 px-4 py-3.5 max-[700px]:grid-cols-1 max-[700px]:gap-1">
-                      <dt className="text-[13.5px] font-semibold text-heading">{item.title}</dt>
-                      <dd className="m-0 text-[14px] leading-[1.65] text-body">{item.text}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </DetailSection>
-            )}
+          {hasItems(details.features) && (
+            <DetailSection title="Key Features">
+              <ul className="m-0 p-0 list-none grid grid-cols-2 gap-3 max-[700px]:grid-cols-1">
+                {details.features.map((feature) => (
+                  <FeatureCard key={feature.title} feature={feature} />
+                ))}
+              </ul>
+            </DetailSection>
+          )}
 
-            {hasItems(details.contributions) && (
-              <DetailSection title="My Contributions">
-                <ul className="m-0 p-0 list-none flex flex-col gap-3">
-                  {details.contributions.map((item) => (
-                    <li key={item} className="flex gap-3 text-[14.5px] leading-[1.7] text-body">
-                      <span className="shrink-0 mt-[3px] flex items-center justify-center w-5 h-5 rounded-full bg-accent-soft text-accent" aria-hidden="true">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </DetailSection>
-            )}
-          </div>
+          {hasItems(details.implementation) && (
+            <DetailSection title="Technical Implementation">
+              <dl className="m-0 rounded-[14px] border border-line divide-y divide-[var(--border)] overflow-hidden">
+                {details.implementation.map((item) => (
+                  <div key={item.title} className="grid grid-cols-[200px_minmax(0,1fr)] gap-4 px-4 py-3.5 max-[700px]:grid-cols-1 max-[700px]:gap-1">
+                    <dt className="text-[13.5px] font-semibold text-heading">{item.title}</dt>
+                    <dd className="m-0 text-[14px] leading-[1.65] text-body">{item.text}</dd>
+                  </div>
+                ))}
+              </dl>
+            </DetailSection>
+          )}
 
-          <aside className="min-w-0 min-[1024px]:sticky min-[1024px]:top-0">
-            {hasItems(project.tech) && (
-              <DetailSection title="Technologies Used">
-                <ul className="m-0 p-0 list-none grid grid-cols-3 gap-2.5 max-[1023px]:grid-cols-[repeat(auto-fill,minmax(96px,1fr))]">
-                  {project.tech.map((tech) => (
-                    <TechTile key={tech} name={tech} />
-                  ))}
-                </ul>
-              </DetailSection>
-            )}
-
-            {hasLinks && (
-              <DetailSection title="Links">
-                <div className="flex flex-wrap gap-3">
-                  {hasText(links.live) && (
-                    <a href={links.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-accent text-white dark:text-[#0b0b10] no-underline text-[14px] font-semibold">
-                      <ExternalLinkIcon /> Live Demo
-                    </a>
-                  )}
-                  {hasText(links.source) && (
-                    <a href={links.source} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 h-10 px-4 rounded-full border border-line text-heading no-underline text-[14px] font-semibold hover:border-accent-line hover:text-accent">
-                      <GithubIcon /> Source Code
-                    </a>
-                  )}
-                </div>
-              </DetailSection>
-            )}
-          </aside>
+          {hasItems(details.contributions) && (
+            <DetailSection title="My Contributions">
+              <ul className="m-0 p-0 list-none flex flex-col gap-3">
+                {details.contributions.map((item) => (
+                  <li key={item} className="flex gap-3 text-[14.5px] leading-[1.7] text-body">
+                    <span className="shrink-0 mt-[3px] flex items-center justify-center w-5 h-5 rounded-full bg-accent-soft text-accent" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </DetailSection>
+          )}
         </div>
       </div>
     </div>

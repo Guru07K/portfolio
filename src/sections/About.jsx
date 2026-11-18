@@ -20,16 +20,17 @@ const PinIcon = () => (
 function About() {
   return (
     <section className="animate-fade-in relative p-[56px_max(24px,calc((100%_-_1200px)/2))_72px] box-border max-[600px]:px-4 max-[767px]:py-12">
-      <div className="max-w-[760px]">
-        <p className="flex items-center gap-3 mb-4 text-[12px] font-bold uppercase tracking-[2px] text-body">
+      <div className="max-w-[760px] mx-auto text-center">
+        <p className="flex items-center justify-center gap-3 mb-4 text-[12px] font-bold uppercase tracking-[2px] text-body">
           <span className="w-7 h-[2px] rounded-full bg-accent" aria-hidden="true" />
           About Me
+          <span className="w-7 h-[2px] rounded-full bg-accent" aria-hidden="true" />
         </p>
         <h2 className="text-[clamp(26px,2.6vw,34px)] leading-[1.25] tracking-[-0.02em]">
           Hi, I'm Gnanaguru, a <span className="text-accent">Software Engineer</span>.
         </h2>
 
-        <ul className="m-0 mt-4 p-0 list-none flex flex-wrap items-center gap-y-1.5 text-[14.5px] text-body max-[600px]:flex-col max-[600px]:items-start max-[600px]:text-[14px]">
+        <ul className="m-0 mt-4 p-0 list-none flex flex-wrap items-center justify-center gap-y-1.5 text-[14.5px] text-body max-[600px]:flex-col max-[600px]:items-center max-[600px]:text-[14px]">
           {LOCATION.map((item, i) => (
             <li key={item} className="flex items-center">
               {i === 0 ? (
@@ -39,12 +40,12 @@ function About() {
               ) : (
                 <span className="mx-3 h-4 w-px bg-line max-[600px]:hidden" aria-hidden="true" />
               )}
-              <span className={i === 0 ? "font-semibold text-heading" : "max-[600px]:pl-6"}>{item}</span>
+              <span className={i === 0 ? "font-semibold text-heading" : undefined}>{item}</span>
             </li>
           ))}
         </ul>
 
-        <div className="mt-7 flex flex-col gap-4 max-w-[68ch] max-[600px]:mt-6">
+        <div className="mt-7 mx-auto flex flex-col gap-4 max-w-[68ch] max-[600px]:mt-6">
           {PARAGRAPHS.map((text) => (
             <p key={text} className="text-body text-[16px] leading-[1.8] max-[600px]:text-[15px] max-[600px]:leading-[1.75]">
               {text}

@@ -26,26 +26,25 @@ const MailIcon = () => (
   </svg>
 );
 
+const PhoneIcon = () => (
+  <svg {...iconProps} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z" />
+  </svg>
+);
+
 const LINKS = [
   { label: "GitHub", href: PROFILE.github, icon: <GitHubIcon />, external: true },
   { label: "LinkedIn", href: PROFILE.linkedin, icon: <LinkedInIcon />, external: true },
   { label: "Email", href: `mailto:${PROFILE.email}`, icon: <MailIcon />, external: false },
+  { label: `Call ${PROFILE.phoneDisplay}`, href: `tel:${PROFILE.phone}`, icon: <PhoneIcon />, external: false },
 ];
 
-/* Minimal personal footer: credit, tagline and social links. */
+/* Minimal footer: contact links only. */
 function Footer() {
   return (
     <footer className="border-t border-line bg-white dark:bg-[#0b0b12]">
-      <div className="mx-auto grid grid-cols-[1fr_auto_1fr] items-center gap-6 py-6 px-[max(24px,calc((100%_-_1200px)/2))] max-[760px]:grid-cols-1 max-[760px]:justify-items-center max-[760px]:gap-3 max-[760px]:py-7 max-[760px]:text-center max-[400px]:px-4">
-        <p className="text-[13.5px] text-body">
-          Designed &amp; Built by <span className="font-semibold text-heading">{PROFILE.name}</span>
-        </p>
-
-        <p className="text-[13px] text-body opacity-80 max-[760px]:order-3">
-          Building reliable software, one solution at a time.
-        </p>
-
-        <ul className="m-0 p-0 list-none flex items-center gap-2 justify-self-end max-[760px]:justify-self-center">
+      <nav aria-label="Contact links" className="mx-auto flex justify-center py-6 px-[max(24px,calc((100%_-_1200px)/2))] max-[400px]:px-4">
+        <ul className="m-0 p-0 list-none flex items-center justify-center gap-3">
           {LINKS.map((link) => (
             <li key={link.label}>
               <a
@@ -60,7 +59,7 @@ function Footer() {
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
     </footer>
   );
 }

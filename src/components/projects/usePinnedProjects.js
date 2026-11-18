@@ -39,6 +39,22 @@ function canScrollInside(element, direction) {
   return element.scrollTop > 0;
 }
 
+/*
+ * The details view may contain more than one scroll pane (e.g. a fixed left
+ * column and a scrolling right column). Walk up from the event target to the
+ * details root and report whether any scrollable element on the way can
+ * still move in `direction`.
+ */
+function canScrollWithin(root, target, direction) {
+  if (!root || !(target instanceof Element) || !root.contains(target)) return false;
+  for (let el = target; el; el = el.parentElement) {
+    const { overflowY } = getComputedStyle(el);
+    if ((overflowY === "auto" || overflowY === "scroll") && canScrollInside(el, direction)) return true;
+    if (el === root) break;
+  }
+  return false;
+}
+
 const supportsTouchAction = (value) =>
   typeof CSS !== "undefined" && typeof CSS.supports === "function" && CSS.supports("touch-action", value);
 
@@ -172,7 +188,7 @@ export default function usePinnedProjects(count, { trackRef, stageRef, detailsSc
       if (detailsOpenRef.current) {
         // Reading view: the details pane scrolls; nothing else moves.
         const pane = detailsScrollRef.current;
-        if (pane && pane.contains(event.target) && canScrollInside(pane, dir)) return;
+        if (canScrollWithin(pane, event.target, dir)) return;
         event.preventDefault();
         return;
       }

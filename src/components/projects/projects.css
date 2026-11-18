@@ -38,16 +38,51 @@
   .project-anim--preview-prev { animation-name: project-preview-prev; }
   .project-anim--view { animation-name: project-view-in; animation-duration: 0.45s; }
 
-  .project-scroll-pane {
+  /*
+   * Details reading view. Below 1024px the whole body is one scroll pane;
+   * from 1024px the left column stays fixed and only the right column scrolls.
+   * Scrollbars are hidden; a fade at the bottom hints at more content.
+   */
+  .project-details-body,
+  .project-details-main,
+  .project-details-aside {
     overscroll-behavior: contain;
-    touch-action: pan-y pinch-zoom;
     scrollbar-width: none;
     -ms-overflow-style: none;
+  }
+
+  .project-details-body::-webkit-scrollbar,
+  .project-details-main::-webkit-scrollbar,
+  .project-details-aside::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-details-body {
+    overflow-y: auto;
+    touch-action: pan-y pinch-zoom;
     mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);
   }
 
-  .project-scroll-pane::-webkit-scrollbar {
-    display: none;
+  @media (min-width: 1024px) {
+    .project-details-body {
+      overflow: hidden;
+      touch-action: pinch-zoom;
+      mask-image: none;
+    }
+
+    .project-details-main {
+      min-height: 0;
+      overflow-y: auto;
+      touch-action: pan-y pinch-zoom;
+      mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);
+    }
+
+    /* Only scrolls if a very short viewport cannot fit the summary. */
+    .project-details-aside {
+      min-height: 0;
+      overflow-y: auto;
+      touch-action: pan-y pinch-zoom;
+    }
   }
 
   .project-number,

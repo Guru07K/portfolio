@@ -3,6 +3,7 @@ import { HERO_STATS } from "../components/heroStatsClasses";
 import { EXPERIENCE, totalExperienceLabel } from "../data/experience";
 import { TECHNOLOGY_COUNT } from "../data/skills";
 import { RESUME_URL } from "../data/resume";
+import HeroVisual from "../components/HeroVisual";
 
 
 const SOCIAL_LINKS = [
@@ -127,7 +128,10 @@ function Home({ onNavigate }) {
         <span className="hidden" />
       </div>
 
-      <div className="relative z-10 flex flex-col justify-center pt-[56px] pr-[40px] pb-[48px] pl-[max(24px,calc((100vw_-_1200px)/2))] bg-[linear-gradient(90deg,#ffffff_0%,#f1f1ff_55%,#f3f5fd_100%)] dark:bg-[linear-gradient(90deg,#0b0b12_0%,#171b34_55%,#262b52_100%)] max-[900px]:p-[70px_max(24px,calc((100vw_-_1200px)/2))_40px]">
+      <div className="relative z-10 flex flex-col justify-center pt-[56px] pr-[40px] pb-[48px] pl-[max(24px,calc((100vw_-_1200px)/2))] min-[1100px]:pr-[max(24px,calc((100vw_-_1200px)/2))] bg-[linear-gradient(90deg,#ffffff_0%,#f1f1ff_55%,#f3f5fd_100%)] dark:bg-[linear-gradient(90deg,#0b0b12_0%,#171b34_55%,#262b52_100%)] max-[900px]:p-[70px_max(24px,calc((100vw_-_1200px)/2))_40px]">
+        {/* Intro on the left; decorative backend visual on the right (wide screens only). */}
+        <div className="grid grid-cols-[minmax(0,1fr)] items-center min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(360px,440px)] min-[1100px]:gap-x-[clamp(32px,4vw,64px)]">
+        <div className="min-w-0">
         <p className="flex items-center gap-[10px] mb-[18px] text-[#596177] dark:text-[#9ca3af] text-[14px] font-semibold tracking-[2px] uppercase max-[400px]:text-[12px]">
           <span className="inline-block w-[50px] h-[2px] bg-[#6425e9]" /> Backend Developer
         </p>
@@ -190,6 +194,10 @@ function Home({ onNavigate }) {
             </svg>
             Download Resume
           </a>
+        </div>
+        </div>
+
+        <HeroVisual className="hidden min-[1100px]:block" />
         </div>
         <div className="flex flex-row flex-wrap items-end justify-between gap-[22px] mt-[28px] max-[900px]:flex-col max-[900px]:items-start">
 
